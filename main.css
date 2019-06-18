@@ -1,0 +1,59 @@
+html {
+  font-size: 62.5%;
+}
+/* body {
+  max-width: 950px;
+  width: 100%;
+} */
+
+.bingo__btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  font-size: 3rem;
+  background: #666;
+  padding: 20px 0;
+  width: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 50px;
+  color: #fff;
+  display: block;
+  border-radius: 5px;
+}
+
+.bingo__answer {
+  display: block;
+  font-size: 5rem;
+  background-color: #333;
+  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 50px;
+  text-align: center;
+  color: #fff;
+}
+
+.bingo-num-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.bingo-num-list__item {
+  font-size: 1.8rem;
+  display: inline-block;
+  padding: 10px;
+}
+
+[data-bg-color="white"] {
+  background-color: #fff;
+  color: #000;
+}
+
+[data-bg-color="black"] {
+  background-color: #000;
+  color: #fff;
+}
