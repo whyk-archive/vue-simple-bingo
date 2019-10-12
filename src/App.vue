@@ -1,14 +1,18 @@
 <template>
   <div id="app" class="bingo">
     <h1 class="bingo__title">BINGO!!!!</h1>
-
-    <button class="bingo__btn" v-if="lotteryComplete" v-on:click="reset">Reset( ˘ω˘)</button>
-    <button class="bingo__btn" v-else v-on:click="lottery">Select Start!!</button>
-
+    <button class="bingo__btn" v-if="lotteryComplete" @click="reset">Reset( ˘ω˘)</button>
+    <button class="bingo__btn" v-else @click="lottery">Select Start!!</button>
     <span class="bingo__answer">{{ outputNum }}</span>
-
     <ul id="bingo-num" class="bingo-num-list">
-      <li v-bind:id="`num-${n}`" class="bingo-num-list__item" data-bg-color="white" v-for="n in 75" :key="n">{{ n }}</li>
+      <li
+        :id="`num-${n}`"
+        class="bingo-num-list__item"
+        data-bg-color="white"
+        v-for="n in 75"
+        :key="n">
+        {{ n }}
+      </li>
     </ul>
   </div>
 </template>
