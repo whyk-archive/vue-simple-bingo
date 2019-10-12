@@ -27,39 +27,39 @@ import HelloWorld from './components/HelloWorld.vue';
   },
 })
 export default class App extends Vue {
-  buttonText: string = 'Start!!';
-  outputNum: string | number = 'Ready...';
-  count: number = 0
-  countMaxNum: number = 75
-  lotteryComplete: boolean = false
+  public buttonText: string = 'Start!!';
+  public outputNum: string | number = 'Ready...';
+  public count: number = 0;
+  public countMaxNum: number = 75;
+  public lotteryComplete: boolean = false;
 
-  selectNum(): void | Element | null {
-      const lotteryNum = Math.floor(Math.random() * Math.floor(this.countMaxNum) + 1);
-      this.outputNum = lotteryNum;
-      const selectNumElm = document.querySelector(`#num-${lotteryNum}`);
-      const selectNumElmBackground = selectNumElm.getAttribute('data-bg-color');
-      if(selectNumElmBackground === 'white') {
-        return selectNumElm;
-      } else {
-        return this.selectNum();
-      };
-    };
-    lottery(): void {
-      this.selectNum().setAttribute('data-bg-color', 'black');
-      this.count++;
-      if(this.count === 75) {
-        this.lotteryComplete = true;
-        this.outputNum = 'Finish!!';
-      }
-    };
-    reset(): void {
-      this.lotteryComplete = false;
-      this.count = 0;
-      this.outputNum = 'Ready...';
-      document.querySelectorAll('#bingo-num li').forEach((elm) => {
-        elm.setAttribute('data-bg-color', 'white');
-      })
+  public selectNum(): void | Element | null {
+    const lotteryNum = Math.floor(Math.random() * Math.floor(this.countMaxNum) + 1);
+    this.outputNum = lotteryNum;
+    const selectNumElm = document.querySelector(`#num-${lotteryNum}`);
+    const selectNumElmBackground = selectNumElm.getAttribute('data-bg-color');
+    if (selectNumElmBackground === 'white') {
+      return selectNumElm;
+    } else {
+      return this.selectNum();
     }
+  }
+  public lottery(): void {
+    this.selectNum().setAttribute('data-bg-color', 'black');
+    this.count++;
+    if (this.count === 75) {
+      this.lotteryComplete = true;
+      this.outputNum = 'Finish!!';
+    }
+  }
+  public reset(): void {
+    this.lotteryComplete = false;
+    this.count = 0;
+    this.outputNum = 'Ready...';
+    document.querySelectorAll('#bingo-num li').forEach((elm) => {
+      elm.setAttribute('data-bg-color', 'white');
+    });
+  }
 }
 </script>
 
