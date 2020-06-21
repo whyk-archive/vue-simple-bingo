@@ -1,24 +1,2 @@
 # vue-simple-bingo
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+2019年6月15日に社内勉強会で作ったやつ（2020年6月22日にリファクタリング）
