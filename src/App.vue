@@ -1,65 +1,76 @@
 <template>
   <div id="app" class="bingo">
     <h1 class="bingo__title">BINGO!!!!</h1>
-    <button class="bingo__btn" v-if="lotteryComplete" @click="reset">Reset( ˘ω˘)</button>
+    <button class="bingo__btn" v-if="complate" @click="reset">Reset( ˘ω˘)</button>
     <button class="bingo__btn" v-else @click="lottery">Select Start!!</button>
-    <span class="bingo__answer">{{ outputNum }}</span>
+    <span class="bingo__answer">
+      <template v-if="output === 0">Ready...</template>
+      <template v-else-if="complate">Finish!!</template>
+      <template v-else>{{ output }}</template>
+    </span>
     <ul id="bingo-num" class="bingo-num-list">
       <li
-        :id="`num-${n}`"
-        class="bingo-num-list__item"
-        data-bg-color="white"
-        v-for="n in 75"
-        :key="n">
-        {{ n }}
+        :class="['bingo-num-list__item', {'is-selected': bool}]"
+        v-for="(bool, index) in list"
+        :key="index">
+        {{ index + 1 }}
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-property-decorator';
+import Vue from 'vue'
 
-export default class App extends Vue {
-  public buttonText: string = 'Start!!';
-  public outputNum: string | number = 'Ready...';
-  public count: number = 0;
-  public countMaxNum: number = 75;
-  public lotteryComplete: boolean = false;
-
-  public selectNum(): void | Element | null {
-    const lotteryNum = Math.floor(Math.random() * Math.floor(this.countMaxNum) + 1);
-    this.outputNum = lotteryNum;
-    const selectNumElm = document.querySelector(`#num-${lotteryNum}`);
-    const selectNumElmBackground = selectNumElm.getAttribute('data-bg-color');
-    if (selectNumElmBackground === 'white') {
-      return selectNumElm;
-    } else {
-      return this.selectNum();
+export default Vue.extend({
+  name: 'App',
+  data () {
+    return {
+      max: 75,
+      count: 0,
+      list: [false],
+      winList: [0],
+      output: 0,
+      complate: false
+    }
+  },
+  mounted () {
+    this.list = Array(this.max).fill(false)
+  },
+  methods: {
+    selectNum (): number {
+      const randNum = Math.floor(Math.random() * Math.floor(this.max) + 1)
+      if (this.winList.includes(randNum)) return this.selectNum()
+      else return randNum
+    },
+    lottery () {
+      const winNum = this.selectNum()
+      this.output = winNum
+      this.winList.push(winNum)
+      this.list.splice(winNum - 1, 1, true)
+      this.count++
+      if (this.count === this.max) this.complate = true
+    },
+    reset () {
+      this.count = 0
+      this.list = Array(this.max).fill(false)
+      this.output = 0
+      this.complate = false
     }
   }
-  public lottery(): void {
-    this.selectNum().setAttribute('data-bg-color', 'black');
-    this.count++;
-    if (this.count === 75) {
-      this.lotteryComplete = true;
-      this.outputNum = 'Finish!!';
-    }
-  }
-  public reset(): void {
-    this.lotteryComplete = false;
-    this.count = 0;
-    this.outputNum = 'Ready...';
-    document.querySelectorAll('#bingo-num li').forEach((elm) => {
-      elm.setAttribute('data-bg-color', 'white');
-    });
-  }
-}
+})
 </script>
 
 <style lang="scss">
 html {
   font-size: 62.5%;
+}
+
+.bingo {
+  max-width: 1000px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .bingo__btn {
@@ -102,15 +113,9 @@ html {
   font-size: 1.8rem;
   display: inline-block;
   padding: 10px;
-}
-
-[data-bg-color="white"] {
-  background-color: #fff;
-  color: #000;
-}
-
-[data-bg-color="black"] {
-  background-color: #000;
-  color: #fff;
+  &.is-selected {
+    background-color: #000;
+    color: #fff;
+  }
 }
 </style>
